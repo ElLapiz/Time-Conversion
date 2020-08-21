@@ -1,0 +1,84 @@
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static String hh;
+    static String mmss;
+    static String ampm;
+
+    /*
+     * Complete the timeConversion function below.
+     */
+    static String timeConversion(String s) {
+        String result;
+        setHH(s);
+        setMMSS(s);
+        setAMPM(s);
+        defineHH(hh, ampm);
+        result = hh+mmss;
+        return result;
+    }
+
+    static void setHH(String s){
+        hh = s.substring(0, 2);
+    }
+
+    static void setMMSS(String s){
+        mmss = s.substring(2, 8);
+    }
+
+    static void setAMPM(String s){
+        ampm = s.substring(8,10);
+    }
+
+    static void defineHH(String hour, String ampm){
+        switch(ampm) {
+        case"AM":
+            hh = ifAM(hour);
+            break;
+        case "PM":
+            hh = ifPM(hour);
+            break;
+        }
+    }
+
+    private static String ifAM(String hh) {
+        String result = "";
+        if(hh.equals("12")) {
+            result = "00";
+        } else {
+            result = hh;
+        } 
+        return result;
+    }
+    
+    private static String ifPM(String hh) {
+        String result = "";
+        int hhInt = Integer.parseInt(hh);
+        if (hh.equals("12")) {
+            result = hh;
+        } else {
+        result = Integer.toString(hhInt + 12);
+        }
+        return result;
+    }
+
+    private static final Scanner scan = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String s = scan.nextLine();
+
+        String result = timeConversion(s);
+
+        bw.write(result);
+        bw.newLine();
+
+        bw.close();
+    }
+}
